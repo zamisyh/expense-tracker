@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export const Transaction = ({transaction}) => {
     const sign = transaction.amount < 0 ? '-' : '+' 
 
