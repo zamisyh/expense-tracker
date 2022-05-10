@@ -1,12 +1,17 @@
+const connectDB = require('./config/database/db')
 const { express, cors, colors, http, path, env } = require('./lib/lib')
+const trasactions = require('./routes/transactions')
 
 env.config({ path: './config/config.env' })
+connectDB()
 
 const app = express()
 app.use(express.json());
 app.use(cors({
     origin: '*'
 }))
+
+app.use('/api/v1/transactions', trasactions)
 
 app.all("*", (req, res) => {
     res.send({
