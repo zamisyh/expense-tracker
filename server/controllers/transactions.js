@@ -54,12 +54,28 @@ exports.addTransactions = async (req, res, next) => {
 
 exports.deleteTransactions = async (req, res, next) => {
     try {
-        const transaction = await Transaction.findByIdAndDelete(req.params.id)
-        return res.status(200).json({
+        // const transaction = await Transaction.findByIdAndDelete(req.params.id)
+        // return res.status(200).json({
+        //     success: true,
+        //     message: 'Successfully deleted',
+        //     data: transaction
+        // })
+        const transaction = await Transaction.findById(req.params.id)
+        if (!transaction) {
+            return res.status(404).json({
+                success: false,
+                message: 'No transaction found'
+            })
+        }
+
+        await transaction.remove()
+
+         return res.status(200).json({
             success: true,
             message: 'Successfully deleted',
             data: transaction
         })
+
     } catch (error) {
         return res.status(500).json({
             success: false,
