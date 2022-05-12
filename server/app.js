@@ -1,5 +1,5 @@
 const connectDB = require('./config/database/db')
-const { express, cors, colors, http, path, env } = require('./lib/lib')
+const { express, cors, colors, http, path, env, morgan } = require('./lib/lib')
 const trasactions = require('./routes/transactions')
 
 env.config({ path: './config/config.env' })
@@ -10,6 +10,10 @@ app.use(express.json());
 app.use(cors({
     origin: '*'
 }))
+
+if(process.env.NODE_ENV === 'development'){
+    app.use(morgan('dev'))
+}
 
 app.use('/api/v1/transactions', trasactions)
 
